@@ -11,17 +11,19 @@ end
 
 =begin
 class User < ActiveRecord::Base
-	has_many :user_room
-	has_many :room, through: :user_room
-	has_many :admin_room
-	has_many :folder
+	has_many :user_rooms
+	has_many :rooms, through: :user_rooms
+	has_many :admin_rooms
+	has_many :rooms, through: :admin_rooms
+	has_many :folders
 end
 class Room < ActiveRecord::Base
-	has_many :user_room
-	has_many :user, through: :user_room
-	has_many :admin_room
-	has_many :folder_room
-	has_many :folder, through: :folder_room
+	has_many :user_rooms
+	has_many :users, through: :user_rooms
+	has_many :admin_rooms
+	has_many :users, through: :admin_rooms
+	has_many :folder_rooms
+	has_many :folders, through: :folder_rooms
 end
 class UserRoom < ActiveRecord::Base
 	belongs_to :user
@@ -33,9 +35,9 @@ class AdminRoom < ActiveRecord::Base
 end
 class Folder < ActiveRecord::Base
 	belongs_to :user
-	has_many :file
-	has_many :folder_room
-	has_many :room, through: :folder_room
+	has_many :files
+	has_many :folder_rooms
+	has_many :rooms, through: :folder_rooms
 end
 class File< ActiveRecord::Base
 	belongs_to :folder
