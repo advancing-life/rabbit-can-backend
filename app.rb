@@ -23,23 +23,25 @@ post '/test' do
 end
 
 post '/sign_up' do
-	begin
+	#begin
 		sign_up_data = JSON.parse(request.body.read)
 		UserContents.new.new_create_user(sign_up_data['mail'],sign_up['password'])
-	rescue
+	#rescue
 		puts "error"
-	end
+		result_sign_up.to_jsok
+	#end
 end
 
 post '/sign_in' do
-	begin
+	#begin
 		sign_in_data = JSON.parse(request.body.read)
 		#puts sign_in_data['mail']
 		#puts sign_in_data['password']
 		UserContents.new.oauth_user(sign_in_data['mail'],sign_in_data['password'])
-	rescue
-		puts "error"
-	end
+		result_sign_in.to_jsok
+	#rescue
+		#puts "error"
+	#end
 end
 
 get '/show' do
