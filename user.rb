@@ -14,7 +14,7 @@ class UserContents
 	end
 	def oauth_user(is_mail,is_password)#ユーザーのログイン認証
 		user = User.find_by(mail: is_mail)
-		if user && user.authenticate(is_password)
+		if user && user.password(is_password)
 			#sessionの保存をさせる
 		end
 	end
