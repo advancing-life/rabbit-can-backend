@@ -31,11 +31,10 @@ post '/sign_up' do
   up_pass = sign_up_data['password']
   #-----------------------------------------
   puts "[sign up mail] => #{up_mail}"
-  puts "[sing up passward] => #{up_pass}"
+  puts "[sing up password] => #{up_pass}"
   #-----------------------------------------
   uc.new_create_user(up_mail, up_pass)
   #rescue
-  puts "error"
   article_signup = {
     id: 202,
     title: "UserContents-error",
@@ -49,11 +48,11 @@ end
 post '/sign_in' do
   #begin
   sign_in_data = JSON.parse(request.body.read)
-  in_mail = sign_up_data['mail']
-  in_pass = sign_up_data['password']
+  in_mail = sign_in_data['mail']
+  in_pass = sign_in_data['password']
   #-----------------------------------------
   puts "[sign in mail] => #{in_mail}"
-  puts "[sign in passward] => #{in_pass}"
+  puts "[sign in password] => #{in_pass}"
   #-----------------------------------------
   uc.oauth_user(in_mail, in_pass)
   result_sign_in.to_jsok
