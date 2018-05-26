@@ -11,7 +11,6 @@ end
 #end
 
 class User < ActiveRecord::Base
-<<<<<<< HEAD
 end
 =begin
 	has_many :user_rooms
@@ -21,7 +20,6 @@ end
 	has_many :folders
 end
 
-=======
   has_secure_password
   # has_many :user_rooms
   # has_many :rooms, through: :user_rooms
@@ -30,8 +28,6 @@ end
   # has_many :folders
 end
 
-=begin
->>>>>>> ce93132417e92398be9e8abf83854ff2a923c1e5
 class Room < ActiveRecord::Base
   has_many :user_rooms
   has_many :users, through: :user_rooms
@@ -58,7 +54,6 @@ class Folder < ActiveRecord::Base
   has_many :rooms, through: :folder_rooms
 end
 
-<<<<<<< HEAD
 class File < ActiveRecord::Base
 	belongs_to :folder
 end
@@ -66,7 +61,6 @@ end
 class FolderRoom < ActiveRecord::Base
 	belongs_to :folder
 	belongs_to :room
-=======
 class File< ActiveRecord::Base
   belongs_to :folder
 end
@@ -74,6 +68,5 @@ end
 class FolderRoom< ActiveRecord::Base
   belongs_to :folder
   belongs_to :room
->>>>>>> ce93132417e92398be9e8abf83854ff2a923c1e5
 end
 =end
