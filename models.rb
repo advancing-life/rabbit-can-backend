@@ -1,5 +1,6 @@
 require 'bundler/setup'
 Bundler.require
+require 'bcrypt'
 
 if development?
   ActiveRecord::Base.establish_connection("sqlite3:db/development.db")
@@ -10,6 +11,7 @@ end
 #end
 
 class User < ActiveRecord::Base
+<<<<<<< HEAD
 end
 =begin
 	has_many :user_rooms
@@ -19,32 +21,44 @@ end
 	has_many :folders
 end
 
+=======
+  has_secure_password
+  # has_many :user_rooms
+  # has_many :rooms, through: :user_rooms
+  # has_many :admin_rooms
+  # has_many :rooms, through: :admin_rooms
+  # has_many :folders
+end
+
+=begin
+>>>>>>> ce93132417e92398be9e8abf83854ff2a923c1e5
 class Room < ActiveRecord::Base
-	has_many :user_rooms
-	has_many :users, through: :user_rooms
-	has_many :admin_rooms
-	has_many :users, through: :admin_rooms
-	has_many :folder_rooms
-	has_many :folders, through: :folder_rooms
+  has_many :user_rooms
+  has_many :users, through: :user_rooms
+  has_many :admin_rooms
+  has_many :users, through: :admin_rooms
+  has_many :folder_rooms
+  has_many :folders, through: :folder_rooms
 end
 
 class UserRoom < ActiveRecord::Base
-	belongs_to :user
-	belongs_to :room
+  belongs_to :user
+  belongs_to :room
 end
 
 class AdminRoom < ActiveRecord::Base
-	belongs_to :user
-	belongs_to :room
+  belongs_to :user
+  belongs_to :room
 end
 
 class Folder < ActiveRecord::Base
-	belongs_to :user
-	has_many :files
-	has_many :folder_rooms
-	has_many :rooms, through: :folder_rooms
+  belongs_to :user
+  has_many :files
+  has_many :folder_rooms
+  has_many :rooms, through: :folder_rooms
 end
 
+<<<<<<< HEAD
 class File < ActiveRecord::Base
 	belongs_to :folder
 end
@@ -52,5 +66,14 @@ end
 class FolderRoom < ActiveRecord::Base
 	belongs_to :folder
 	belongs_to :room
+=======
+class File< ActiveRecord::Base
+  belongs_to :folder
+end
+
+class FolderRoom< ActiveRecord::Base
+  belongs_to :folder
+  belongs_to :room
+>>>>>>> ce93132417e92398be9e8abf83854ff2a923c1e5
 end
 =end
