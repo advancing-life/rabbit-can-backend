@@ -16,7 +16,11 @@ before do
     'Access-Control-Allow-Methods' => ['OPTIONS', 'GET', 'POST']  
 end
 
-uc = UserContents.new
+helpers do
+  def uc
+    UserContents.new
+  end
+end
 
 get '/' do
 end
