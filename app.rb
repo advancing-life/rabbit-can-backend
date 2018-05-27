@@ -24,9 +24,7 @@ end
 
 post '/sign_up' do
   data = JSON.parse(request.body.read)
-  mail = data['mail']
-  password = data['password']
-  user = UserContents.create_user(mail, password)
+  user = UserContents.create_user(data["mail"], data["password"])
   unless user
     {
       id: 202,
