@@ -1,11 +1,7 @@
 require 'bundler/setup'
 Bundler.require
 require 'sinatra/reloader' if development?
-require 'sinatra'
-require 'sinatra/json'
-require 'open-uri'
-require 'time'
-require 'json'
+require 'pry' if development?
 
 require './models'
 require './user'
@@ -26,11 +22,7 @@ post '/sign_up' do
   data = JSON.parse(request.body.read)
   user = UserContents.create_user(data["mail"], data["password"])
   unless user
-    {
-      id: 202,
-      title: "UserContents-error",
-      content: "failed"
-    }.to_json
+    status 500
   end
   user.to_json
 end
