@@ -32,10 +32,10 @@ post '/sign_up' do
   user = uc.create_user(data['mail'], data['password'])
   unless user.errors.messages.empty?
     body (user.errors.to_json)
-    status 500
+    status 409
   else
     body(user.to_json)
-    status 200
+    status 201
   end
 end
 
