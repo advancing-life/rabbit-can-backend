@@ -10,6 +10,8 @@ gem 'bcrypt'
 
 group :development, :test do
   gem 'sqlite3'
+  gem 'rspec'
+  gem 'rack-test'
   gem 'pry'
   gem "pry-byebug"
 end
