@@ -1,11 +1,7 @@
 require 'bundler/setup'
 Bundler.require
 require 'sinatra/reloader' if development?
-require 'sinatra'
-require 'sinatra/json'
-require 'open-uri'
-require 'time'
-require 'json'
+require 'pry' if development?
 
 require './models'
 require './user'
@@ -29,24 +25,12 @@ post '/test' do
 end
 
 post '/sign_up' do
-  #begin
-  sign_up_data = JSON.parse(request.body.read)
-  up_mail = sign_up_data['mail']
-  up_pass = sign_up_data['password']
-  #-----------------------------------------
-  puts "[sign up mail] => #{up_mail}"
-  puts "[sing up password] => #{up_pass}"
-  #-----------------------------------------
-  uc.new_create_user(up_mail, up_pass)
-  #rescue
-  article_signup = {
-    id: 202,
-    title: "UserContents-error",
-    content: "success"
-  }
-  article_signup.to_json
-
-  #end
+  data = JSON.parse(request.body.read)
+  user = uc.create_user(data["mail"], data["password"])
+  unless user
+    status 500
+  end
+  user.to_json
 end
 
 post '/sign_in' do
@@ -71,5 +55,5 @@ get '/show' do
     title: "today's dialy",
     content: "It's a sunny day."
   }
-  article.to_json
+  article.to_jsn
 end
