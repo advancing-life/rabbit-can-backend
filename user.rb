@@ -1,16 +1,13 @@
 require 'securerandom'
 
 class UserContents
-  def self.create_user(mail, password)#新規ユーザーの登録
+  def create_user(mail, password)#新規ユーザーの登録
     user = User.new(
       u_id: SecureRandom.hex(64),
       mail: mail,
       password_digest: password,
     )
-    if user.save
-      return user
-    end
-    return nil
+    return (user.save ? user : nil)
   end
 
   def oauth_user(is_mail,is_password)#ユーザーのログイン認証

@@ -12,6 +12,12 @@ before do
     'Access-Control-Allow-Methods' => ['OPTIONS', 'GET', 'POST']  
 end
 
+helpers do
+  def uc
+    UserContents.new
+  end
+end
+
 get '/' do
 end
 
@@ -20,7 +26,7 @@ end
 
 post '/sign_up' do
   data = JSON.parse(request.body.read)
-  user = UserContents.create_user(data["mail"], data["password"])
+  user = uc.create_user(data["mail"], data["password"])
   unless user
     status 500
   end
