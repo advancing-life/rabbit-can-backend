@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'bundler/setup'
 Bundler.require
 require 'sinatra/reloader' if development?
@@ -7,9 +9,9 @@ require './models'
 require './user'
 
 before do
-  content_type :json    
-  headers 'Access-Control-Allow-Origin' => '*', 
-    'Access-Control-Allow-Methods' => ['OPTIONS', 'GET', 'POST']  
+  content_type :json
+  headers 'Access-Control-Allow-Origin' => '*',
+          'Access-Control-Allow-Methods' => %w[OPTIONS GET POST]
 end
 
 helpers do
@@ -26,15 +28,13 @@ end
 
 post '/sign_up' do
   data = JSON.parse(request.body.read)
-  user = uc.create_user(data["mail"], data["password"])
-  unless user
-    status 500
-  end
+  user = uc.create_user(data['mail'], data['password'])
+  status 500 unless user
   user.to_json
 end
 
 post '/sign_in' do
-  #begin
+  # begin
   sign_in_data = JSON.parse(request.body.read)
   in_mail = sign_in_data['mail']
   in_pass = sign_in_data['password']
@@ -44,9 +44,9 @@ post '/sign_in' do
   #-----------------------------------------
   uc.oauth_user(in_mail, in_pass)
   result_sign_in.to_jsok
-  #rescue
-  #puts "error"
-  #end
+  # rescue
+  # puts "error"
+  # end
 end
 
 get '/show' do
