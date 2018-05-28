@@ -31,4 +31,14 @@ module RSpecMixin
   end
 end
 
-RSpec.configure { |c| c.include RSpecMixin }
+RSpec.configure do |c| 
+  c.include RSpecMixin 
+  c.before(:all) do
+    config = YAML.load_file('database.yml')['database']
+    ActiveRecord::Base.configurations = config
+    ActiveRecord::Base.establish_connection(config['test'])
+  end
+  c.after(:each) do
+    ActiveRecord::Base.connection.close
+  end
+end
