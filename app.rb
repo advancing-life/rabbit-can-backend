@@ -30,8 +30,13 @@ end
 post '/sign_up' do
   data = JSON.parse(request.body.read)
   user = uc.create_user(data['mail'], data['password'])
-  status 500 unless user
-  user.to_json
+  unless user.errors.messages.empty?
+    body (user.errors.to_json)
+    status 500
+  else
+    body(user.to_json)
+    status 200
+  end
 end
 
 post '/sign_in' do

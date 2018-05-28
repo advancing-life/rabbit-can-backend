@@ -2,18 +2,25 @@
 
 require 'bundler/setup'
 Bundler.require
-require 'bcrypt'
 
 require 'sinatra'
 require 'sinatra/activerecord'
- 
+
 before do
   config = YAML.load_file('./database.yml')["database"]
   ActiveRecord::Base.configurations = config
   ActiveRecord::Base.establish_connection(config['development'])
 end
 
+after do
+  ActiveRecord::Base.connection.close
+end
+
 class User < ActiveRecord::Base
+  validates :u_id, uniqueness: true
+  validates :mail, presence: true,
+                   uniqueness: true, 
+                   format: { with: /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i }
 end
 #   has_many :user_rooms
 #   has_many :rooms, through: :user_rooms
