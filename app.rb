@@ -21,6 +21,7 @@ helpers do
 end
 
 get '/' do
+  status 200
 end
 
 post '/test' do
