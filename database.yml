@@ -1,4 +1,7 @@
-development:
-  adapter: postgresql
-  database: db/development.db
-
+database:
+  development:
+    adapter: sqlite3
+    database: db/development.db
+  test:
+    adapter: sqlite3
+    database: db/test.db

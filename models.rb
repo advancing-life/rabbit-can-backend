@@ -4,13 +4,14 @@ require 'bundler/setup'
 Bundler.require
 require 'bcrypt'
 
-if development?
-  ActiveRecord::Base.establish_connection('sqlite3:db/development.db')
+require 'sinatra'
+require 'sinatra/activerecord'
+ 
+before do
+  config = YAML.load_file('./database.yml')["database"]
+  ActiveRecord::Base.configurations = config
+  ActiveRecord::Base.establish_connection(config['development'])
 end
-
-# unless ENV['RACK_ENV'] == 'production'
-#    ActiveRecord::Base.establish_connection("sqlite3:db/development.db")
-# end
 
 class User < ActiveRecord::Base
 end
