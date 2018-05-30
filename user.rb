@@ -5,17 +5,16 @@ class UserContents
     puts "UserContents.new.new_create_user--------------------------------------------------------------"
     puts ns_mail
     puts ns_password
-=begin
     @user = User.create(
       u_id:"#{SecureRandom.hex(64)}",
       mail:ns_mail,
-      password:ns_password,
+      password_digest:ns_password,
     )
 
     if @user.persisted?
+      puts "登録完了"
       #sessionの保存をさせる
     end
-=end
   end
   def oauth_user(is_mail,is_password)#ユーザーのログイン認証
     puts "UserContents.new.oauth_user--------------------------------------------------------------"
