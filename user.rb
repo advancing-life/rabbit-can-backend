@@ -19,7 +19,6 @@ class UserContents
         id: @user.u_id,
         mail: @user.mail,
         name: @user.name,
-        content: "success"
       }
       return article_signup
       #sessionの保存をさせる

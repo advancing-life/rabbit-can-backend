@@ -29,7 +29,6 @@ post '/test' do
 end
 
 post '/sign_up' do
-  #begin
   sign_up_data = JSON.parse(request.body.read)
   up_mail = sign_up_data['mail']
   up_pass = sign_up_data['password']
@@ -40,10 +39,13 @@ post '/sign_up' do
   puts "[sing up name] => #{up_name}"
   #-----------------------------------------
   result = uc.new_create_user(up_mail, up_pass, up_name)
-  #rescue
-  result.to_json
-
-  #end
+  unless result.errors.messages.empty?
+    body (result.errors.to_json)
+    status 409
+  else
+    body(result.to_json)
+    status 201
+  end
 end
 
 post '/sign_in' do
