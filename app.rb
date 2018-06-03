@@ -76,11 +76,7 @@ post '/sign_in' do
 
   result = uc.oauth_user(in_mail, in_pass)
 
-  if result == nil
-    status 401
-  elsif result == false
-    status 401
-  else
+  if result
     user_data= {
       u_id: result.u_id,
       mail: result.mail,
@@ -88,6 +84,9 @@ post '/sign_in' do
     }
     body(user_data.to_json)
     status 201
+  else
+    body({msg: "メールアドレス または、パスワード が違います。ご確認の上もう一度お試しください。"}.to_json)
+    status 401
   end
 end
 
