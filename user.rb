@@ -1,19 +1,30 @@
 require 'securerandom'
 
 class UserContents
-  def new_create_user(ns_mail,ns_password)#新規ユーザーの登録
+  def new_create_user(ns_mail,ns_password,ns_name)#新規ユーザーの登録
     puts "UserContents.new.new_create_user--------------------------------------------------------------"
     puts ns_mail
     puts ns_password
+    puts ns_name
     @user = User.create(
       u_id:"#{SecureRandom.hex(64)}",
+      name:ns_name,
       mail:ns_mail,
       password_digest:ns_password,
     )
 
     if @user.persisted?
       puts "登録完了"
+      article_signup = {
+        id: @user.u_id,
+        mail: @user.mail,
+        name: @user.name,
+        content: "success"
+      }
+      return article_signup
       #sessionの保存をさせる
+    else
+      return error
     end
   end
   def oauth_user(is_mail,is_password)#ユーザーのログイン認証
@@ -21,8 +32,17 @@ class UserContents
     puts is_mail
     puts is_password
     user = User.find_by(mail: is_mail)
+
     if user.password && is_password
       #sessionの保存をさせる
+      article_signup = {
+        id: user.u_id,
+        mail: user.mail,
+        name: user.name,
+        content: "success"
+      }
+      puts "login"
+      return article_signin
     end
   end
 end
