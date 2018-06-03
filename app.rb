@@ -33,17 +33,19 @@ post '/sign_up' do
   up_mail = sign_up_data['mail']
   up_pass = sign_up_data['password']
   up_name = sign_up_data['username']
-  #-----------------------------------------
-  puts "[sign up mail] => #{up_mail}"
-  puts "[sing up password] => #{up_pass}"
-  puts "[sing up name] => #{up_name}"
-  #-----------------------------------------
+
   result = uc.new_create_user(up_mail, up_pass, up_name)
+
   unless result.errors.messages.empty?
     body (result.errors.to_json)
     status 409
   else
-    body(result.to_json)
+    user_data= {
+      id: result.u_id,
+      mail: result.mail,
+      name: result.name,
+    }
+    body(user_data.to_json)
     status 201
   end
 end
