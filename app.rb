@@ -51,15 +51,15 @@ post '/sign_up' do
 end
 
 post '/sign_in' do
-  #begin
   sign_in_data = JSON.parse(request.body.read)
   in_mail = sign_in_data['mail']
   in_pass = sign_in_data['password']
 
   result = uc.oauth_user(in_mail, in_pass)
 
-   unless result.errors.messages.empty?
-    body (result.errors.to_json)
+  if result == nil
+    status 409
+  elsif result == false
     status 409
   else
     user_data= {
