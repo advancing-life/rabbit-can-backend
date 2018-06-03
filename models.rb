@@ -38,9 +38,6 @@ class User < ActiveRecord::Base
     if user && user.password_digest == is_password
       #sessionの保存をさせる
       return user
-    else
-      #パスワードが違います
-      return false
     end
   end
 
