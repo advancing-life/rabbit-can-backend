@@ -53,18 +53,23 @@ end
 post '/sign_in' do
   #begin
   sign_in_data = JSON.parse(request.body.read)
-  puts sign_in_data
   in_mail = sign_in_data['mail']
   in_pass = sign_in_data['password']
-  #-----------------------------------------
-  puts "[sign in mail] => #{in_mail}"
-  puts "[sign in password] => #{in_pass}"
-  #-----------------------------------------
-  result = uc.oauth_user(in_mail, in_pass)
-  result.to_jsok
 
-  #puts "error"
-  #end
+  result = uc.oauth_user(in_mail, in_pass)
+
+   unless result.errors.messages.empty?
+    body (result.errors.to_json)
+    status 409
+  else
+    user_data= {
+      u_id: result.u_id,
+      mail: result.mail,
+      name: result.name,
+    }
+    body(user_data.to_json)
+    status 201
+  end
 end
 
 get '/show' do

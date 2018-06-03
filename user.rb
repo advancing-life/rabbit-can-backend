@@ -12,9 +12,10 @@ class UserContents
     return user
   end
   def oauth_user(is_mail,is_password)#ユーザーのログイン認証
+    puts is_mail
     user = User.find_by(mail: is_mail)
 
-    if user.password && is_password
+    if user.password_digest && is_password
       #sessionの保存をさせる
       return user
     end
