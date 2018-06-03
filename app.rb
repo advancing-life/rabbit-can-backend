@@ -41,7 +41,7 @@ post '/sign_up' do
     status 409
   else
     user_data= {
-      id: result.u_id,
+      u_id: result.u_id,
       mail: result.mail,
       name: result.name,
     }
@@ -62,7 +62,7 @@ post '/sign_in' do
   #-----------------------------------------
   result = uc.oauth_user(in_mail, in_pass)
   result.to_jsok
-  #rescue
+
   #puts "error"
   #end
 end
