@@ -3,10 +3,7 @@
 require 'bundler/setup'
 Bundler.require
 require 'sinatra/reloader' if development?
-<<<<<<< HEAD
 require 'pry' if development?
-=======
->>>>>>> develop
 
 require './models'
 require './user'
