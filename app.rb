@@ -6,7 +6,6 @@ require 'sinatra/reloader' if development?
 require 'pry' if development?
 
 require './models'
-require './user'
 require './session'
 
 before do
@@ -17,7 +16,7 @@ end
 
 helpers do
   def uc
-    UserContents.new
+    User.new
   end
 end
 
@@ -33,7 +32,7 @@ post '/check_id' do
   result = Session_oauth.new.user(ch_mail, ch_u_id)
 
   if result == nil || result == false 
-    status 409
+    status 401
   else
     user_data= {
       u_id: result.u_id,
@@ -58,7 +57,7 @@ post '/sign_up' do
 
   unless result.errors.messages.empty?
     body (result.errors.to_json)
-    status 409
+    status 202
   else
     user_data= {
       u_id: result.u_id,
@@ -78,9 +77,9 @@ post '/sign_in' do
   result = uc.oauth_user(in_mail, in_pass)
 
   if result == nil
-    status 409
+    status 401
   elsif result == false
-    status 409
+    status 401
   else
     user_data= {
       u_id: result.u_id,

@@ -2,6 +2,7 @@
 
 require 'bundler/setup'
 Bundler.require
+require 'securerandom'
 
 require 'sinatra'
 require 'sinatra/activerecord'
@@ -19,8 +20,30 @@ end
 class User < ActiveRecord::Base
   validates :u_id, uniqueness: true
   validates :mail, presence: true,
-                   uniqueness: true, 
-                   format: { with: /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i }
+    uniqueness: true, 
+    format: { with: /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i }
+  def new_create_user(ns_mail,ns_password,ns_name)#新規ユーザーの登録
+    user = User.create(
+      u_id:SecureRandom.hex(64),
+      name:ns_name,
+      mail:ns_mail,
+      password_digest:ns_password,
+    )
+
+    return user
+  end
+  def oauth_user(is_mail,is_password)#ユーザーのログイン認証
+    user = User.find_by(mail: is_mail)
+
+    if user && user.password_digest == is_password
+      #sessionの保存をさせる
+      return user
+    else
+      #パスワードが違います
+      return false
+    end
+  end
+
 end
 #   has_many :user_rooms
 #   has_many :rooms, through: :user_rooms
