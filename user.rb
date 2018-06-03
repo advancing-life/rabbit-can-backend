@@ -1,29 +1,25 @@
+# frozen_string_literal: true
+
 require 'securerandom'
 
 class UserContents
-  def new_create_user(ns_mail,ns_password)#新規ユーザーの登録
-    puts "UserContents.new.new_create_user--------------------------------------------------------------"
-    puts ns_mail
-    puts ns_password
-=begin
-    @user = User.create(
-      u_id:"#{SecureRandom.hex(64)}",
-      mail:ns_mail,
-      password:ns_password,
+  def create_user(mail, password) # 新規ユーザーの登録
+    user = User.create(
+      u_id: SecureRandom.hex(64),
+      mail: mail,
+      password_digest: password
     )
-
-    if @user.persisted?
-      #sessionの保存をさせる
-    end
-=end
+    # (user.save ? user : nil)
+    return user
   end
-  def oauth_user(is_mail,is_password)#ユーザーのログイン認証
-    puts "UserContents.new.oauth_user--------------------------------------------------------------"
+
+  def oauth_user(is_mail, is_password) # ユーザーのログイン認証
+    puts 'UserContents.new.oauth_user--------------------------------------------------------------'
     puts is_mail
     puts is_password
     user = User.find_by(mail: is_mail)
     if user.password && is_password
-      #sessionの保存をさせる
+      # sessionの保存をさせる
     end
   end
 end
