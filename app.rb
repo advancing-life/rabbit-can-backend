@@ -1,14 +1,10 @@
 require 'bundler/setup'
 Bundler.require
 require 'sinatra/reloader' if development?
-require 'sinatra'
-require 'sinatra/json'
-require 'open-uri'
-require 'time'
-require 'json'
 
 require './models'
 require './user'
+require './session'
 
 before do
   content_type :json    
@@ -23,6 +19,26 @@ helpers do
 end
 
 get '/' do
+end
+
+post '/check_id' do
+  check_data = JSON.parse(request.body.read)
+  ch_mail = check_data['mail']
+  ch_u_id = check_data['u_id']
+
+  result = Session_oauth.new.user(ch_mail, ch_u_id)
+
+  if result == nil || result == false 
+    status 409
+  else
+    user_data= {
+      u_id: result.u_id,
+      mail: result.mail,
+      name: result.name,
+    }
+    body(user_data.to_json)
+    status 201
+  end
 end
 
 post '/test' do
